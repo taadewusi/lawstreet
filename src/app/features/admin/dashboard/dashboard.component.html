@@ -1,0 +1,24 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar__header">
+      <span>⚖</span>
+      <strong>LawStreet Admin</strong>
+    </div>
+    <nav class="admin-sidebar__nav">
+      <a routerLink="/admin"       routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><span>📊</span> Dashboard</a>
+      <a routerLink="/admin/laws"  routerLinkActive="active"><span>📜</span> Laws</a>
+      <a routerLink="/admin/roles" routerLinkActive="active"><span>🔑</span> Roles</a>
+      <a routerLink="/admin/users" routerLinkActive="active"><span>👥</span> Users</a>
+    </nav>
+    <div class="admin-sidebar__user">
+      <div class="admin-avatar">{{ auth.currentUser?.firstName?.[0] }}{{ auth.currentUser?.lastName?.[0] }}</div>
+      <div>
+        <div class="admin-uname">{{ auth.currentUser?.firstName }} {{ auth.currentUser?.lastName }}</div>
+        <div class="admin-role">{{ auth.currentUser?.roles?.[0] }}</div>
+      </div>
+    </div>
+  </aside>
+  <main class="admin-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

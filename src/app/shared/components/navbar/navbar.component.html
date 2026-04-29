@@ -1,0 +1,37 @@
+<nav class="navbar">
+  <div class="navbar__inner">
+
+    <a class="navbar__logo" routerLink="/">
+      <span class="navbar__logo-icon">⚖</span>
+      <span class="navbar__logo-text">LawStreet</span>
+    </a>
+
+    <div class="navbar__links">
+      <a routerLink="/"       routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+      <a routerLink="/search" routerLinkActive="active">Laws</a>
+      <a routerLink="/admin"  routerLinkActive="active" *ngIf="auth.isAdmin()">Admin</a>
+    </div>
+
+    <div class="navbar__right">
+      <ng-container *ngIf="user$ | async as user; else loginBtn">
+        <div class="navbar__user" (click)="userMenuOpen = !userMenuOpen">
+          <div class="navbar__avatar">{{ user.firstName[0] }}{{ user.lastName[0] }}</div>
+          <span class="navbar__username">{{ user.firstName }}</span>
+          <span class="navbar__chevron">▾</span>
+          <div class="navbar__dropdown" *ngIf="userMenuOpen">
+            <div class="navbar__dropdown-header">
+              <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+              <span>{{ user.email }}</span>
+            </div>
+            <a routerLink="/admin" *ngIf="auth.isAdmin()">Admin Panel</a>
+            <button (click)="logout()">Sign Out</button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #loginBtn>
+        <a class="navbar__login-btn" routerLink="/auth/login">Sign In</a>
+      </ng-template>
+    </div>
+
+  </div>
+</nav>

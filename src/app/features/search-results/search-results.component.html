@@ -1,0 +1,109 @@
+<div class="results-page">
+  <div class="results-page__inner">
+
+    <div class="results-page__searchbar">
+      <a class="results-page__logo" routerLink="/">⚖ LawStreet</a>
+      <div class="results-page__search-box">
+        <input type="text" [(ngModel)]="searchQuery" (keydown.enter)="applyFilters()" placeholder="Search laws..." />
+        <button (click)="applyFilters()">Search</button>
+      </div>
+    </div>
+
+    <div class="results-page__layout">
+      <aside class="results-page__sidebar">
+        <div class="filter-card">
+          <div class="filter-card__title">Filters</div>
+          <div class="filter-group">
+            <label>Category</label>
+            <select [(ngModel)]="selectedCategory" (change)="applyFilters()">
+              <option value="">All Categories</option>
+              <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Jurisdiction</label>
+            <select [(ngModel)]="selectedJurisdiction" (change)="applyFilters()">
+              <option value="">All Jurisdictions</option>
+              <option *ngFor="let j of jurisdictions" [value]="j">{{ j }}</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Status</label>
+            <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+              <option value="">All Statuses</option>
+              <option *ngFor="let s of statuses" [value]="s">{{ s | titlecase }}</option>
+            </select>
+          </div>
+          <button class="filter-clear" (click)="clearFilters()">Clear Filters</button>
+        </div>
+      </aside>
+
+      <main class="results-page__main">
+        <div class="results-page__meta" *ngIf="!loading">
+          <strong>{{ total }}</strong>
+          <span *ngIf="searchQuery"> results for "<em>{{ searchQuery }}</em>"</span>
+          <span *ngIf="!searchQuery"> laws found</span>
+        </div>
+
+        <div class="loading-spinner" *ngIf="loading">
+          <div class="spinner"></div>
+        </div>
+        <div class="alert alert--error" *ngIf="error">{{ error }}</div>
+
+        <div class="results-list" *ngIf="!loading && !error">
+          <div class="result-card" *ngFor="let law of laws" (click)="viewLaw(law.uid)">
+
+            <div class="result-card__top">
+              <!-- Replace category with Act -->
+              <span class="result-card__category">{{ law.act }}</span>
+
+              <!-- Replace status with isPublished -->
+              <!-- <span class="badge" [ngClass]="law.isPublished ? 'badge--active' : 'badge--draft'">
+                {{ law.isPublished ? 'Active' : 'Draft' }}
+              </span> -->
+            </div>
+
+            <h3 class="result-card__title">
+              {{ law.title }}
+            </h3>
+
+            <!-- Replace summary -->
+            <p class="result-card__summary">
+              {{ law.simpleExplanation }}
+            </p>
+
+            <div class="result-card__meta">
+              <span>📍 {{ law.jurisdiction }}</span>
+
+              <!-- Replace enactedDate -->
+              <span>📅 {{ law.createdAt | date:'mediumDate' }}</span>
+
+              <!-- Replace chapter with section -->
+              <span *ngIf="law.section">📖 {{ law.section }}</span>
+            </div>
+
+            <div class="result-card__tags" *ngIf="law.tags?.length">
+              <span class="result-tag" *ngFor="let tag of law.tags.slice(0,4)">
+                {{ tag }}
+              </span>
+            </div>
+
+          </div>
+
+          <div class="empty-state" *ngIf="laws.length === 0">
+            <span class="empty-icon">⚖</span>
+            <h3>No laws found</h3>
+            <p>Try adjusting your search or clearing the filters.</p>
+          </div>
+        </div>
+
+        <div class="pagination" *ngIf="totalPages > 1">
+          <button class="page-btn" [disabled]="page===0" (click)="goToPage(page-1)">‹</button>
+          <button class="page-btn" [class.active]="i===page" *ngFor="let i of pages" (click)="goToPage(i)">{{ i+1
+            }}</button>
+          <button class="page-btn" [disabled]="page>=totalPages-1" (click)="goToPage(page+1)">›</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>

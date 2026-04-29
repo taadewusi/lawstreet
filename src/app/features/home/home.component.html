@@ -1,0 +1,66 @@
+<div class="home">
+  <div class="home__hero">
+
+    <div class="home__logo">
+      <span class="home__logo-icon">⚖</span>
+      <h1 class="home__logo-text">LawStreet</h1>
+      <p class="home__tagline">Search Nigerian Laws &amp; Legislation</p>
+    </div>
+
+    <div class="home__search-wrapper">
+      <div class="home__search-box" [class.focused]="showSuggestions">
+        <span class="home__search-icon">🔍</span>
+        <input
+          type="text"
+          class="home__search-input"
+          placeholder="Search for any law, act, regulation..."
+          [(ngModel)]="searchQuery"
+          (keydown)="onKeydown($event)"
+          (focus)="showSuggestions = true"
+          (blur)="$event.relatedTarget || (showSuggestions = false)"
+          autocomplete="off"
+        />
+        <button class="home__search-clear" *ngIf="searchQuery" (click)="searchQuery=''">✕</button>
+      </div>
+
+      <div class="home__suggestions" *ngIf="showSuggestions && !searchQuery">
+        <div class="home__suggestions-label">Popular searches</div>
+        <div class="home__suggestion-item" *ngFor="let s of suggestions" (mousedown)="selectSuggestion(s)">
+          <span>🕐</span> {{ s }}
+        </div>
+      </div>
+    </div>
+
+    <div class="home__actions">
+      <button class="home__btn home__btn--primary" (click)="search()">Search Laws</button>
+      <button class="home__btn home__btn--secondary" routerLink="/search">Browse All Laws</button>
+    </div>
+
+    <div class="home__categories">
+      <span class="home__category-label">Browse by:</span>
+      <a class="home__chip" [routerLink]="['/search']" [queryParams]="{category:'Criminal'}">Criminal Law</a>
+      <a class="home__chip" [routerLink]="['/search']" [queryParams]="{category:'Labour'}">Labour Law</a>
+      <a class="home__chip" [routerLink]="['/search']" [queryParams]="{category:'Commercial'}">Commercial Law</a>
+      <a class="home__chip" [routerLink]="['/search']" [queryParams]="{category:'Constitutional'}">Constitutional</a>
+      <a class="home__chip" [routerLink]="['/search']" [queryParams]="{category:'Land'}">Land &amp; Property</a>
+      <a class="home__chip" [routerLink]="['/search']" [queryParams]="{category:'Tax'}">Tax Law</a>
+    </div>
+
+    <!-- Top-right login hint -->
+    <div class="home__signin-hint">
+      <a routerLink="/auth/login">Sign In</a> · <a routerLink="/auth/register">Register</a>
+    </div>
+
+  </div>
+
+  <!-- Google-style bottom bar -->
+  <div class="home__footer-bar">
+    <div class="home__footer-links">
+      <a routerLink="/about">About LawStreet</a>
+      <a routerLink="/privacy">Privacy Policy</a>
+      <a routerLink="/terms">Terms of Use</a>
+      <a routerLink="/contact">Contact Us</a>
+      <a routerLink="/help">Help Centre</a>
+    </div>
+  </div>
+</div>

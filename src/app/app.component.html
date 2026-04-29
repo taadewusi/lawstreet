@@ -1,0 +1,7 @@
+<div class="app-shell">
+  <app-navbar *ngIf="!isHomePage && !isAdminPage && !isAuthPage"></app-navbar>
+  <div class="app-shell__content">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer *ngIf="!isAdminPage && !isAuthPage"></app-footer>
+</div>

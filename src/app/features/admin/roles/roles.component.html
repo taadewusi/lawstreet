@@ -1,0 +1,47 @@
+<div class="admin-section">
+  <div class="page-header">
+    <div><h1>Roles Management</h1><p>Define roles and their system permissions.</p></div>
+    <button class="btn btn--primary" (click)="openCreate()">+ Create Role</button>
+  </div>
+  <div class="alert alert--success" *ngIf="success">{{ success }}</div>
+  <div class="alert alert--error"   *ngIf="error">{{ error }}</div>
+
+  <div class="modal-overlay" *ngIf="showForm" (click)="showForm=false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header"><h2>{{ editingRole ? 'Edit Role' : 'Create Role' }}</h2><button class="modal__close" (click)="showForm=false">✕</button></div>
+      <div class="modal__body">
+        <div class="form-group"><label>Role Name *</label><input type="text" [(ngModel)]="form.name" placeholder="e.g. EDITOR, VIEWER" /></div>
+        <div class="form-group"><label>Description</label><input type="text" [(ngModel)]="form.description" placeholder="What this role can do..." /></div>
+        <div class="form-group">
+          <label>Permissions</label>
+          <div class="perm-grid">
+            <label class="perm-check" *ngFor="let perm of availablePermissions">
+              <input type="checkbox" [checked]="hasPerm(perm)" (change)="togglePermission(perm)" /><span>{{ perm }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" (click)="showForm=false">Cancel</button>
+        <button class="btn btn--primary" (click)="submit()" [disabled]="submitting">{{ submitting ? 'Saving...' : (editingRole ? 'Update' : 'Create') }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading"><div class="spinner"></div></div>
+  <div class="roles-grid" *ngIf="!loading">
+    <div class="role-card card" *ngFor="let role of roles">
+      <div class="role-card__header">
+        <div class="role-card__name">{{ role.name }}</div>
+        <div class="role-card__actions">
+          <button class="btn btn--outline btn--sm" (click)="openEdit(role)">Edit</button>
+          <button class="btn btn--danger btn--sm" (click)="deleteRole(role.id)">Del</button>
+        </div>
+      </div>
+      <p class="role-card__desc">{{ role.description || '—' }}</p>
+      <div class="role-card__perms"><span class="perm-badge" *ngFor="let p of role.permissions">{{ p }}</span></div>
+      <div class="role-card__date">Created: {{ role.createdAt | date:'mediumDate' }}</div>
+    </div>
+    <div class="empty-state" *ngIf="roles.length===0"><span class="empty-icon">🔑</span><h3>No roles defined</h3><p>Create your first role to get started.</p></div>
+  </div>
+</div>

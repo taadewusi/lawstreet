@@ -1,0 +1,45 @@
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: #fff; border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+
+  &__inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; gap: 32px; }
+
+  &__logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; flex-shrink: 0;
+    &-icon { font-size: 1.6rem; line-height: 1; }
+    &-text { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #1a3a5c; letter-spacing: -0.02em; }
+  }
+
+  &__links { display: flex; gap: 4px; flex: 1;
+    a { padding: 6px 14px; border-radius: 6px; color: #4b5563; font-size: 0.92rem; font-weight: 500; text-decoration: none; transition: all 0.18s;
+      &:hover { background: #f3f4f6; color: #1a3a5c; }
+      &.active { background: #dbeafe; color: #1a3a5c; }
+    }
+  }
+
+  &__right { margin-left: auto; flex-shrink: 0; }
+
+  &__login-btn { background: #1a3a5c; color: #fff; border: none; padding: 9px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.18s, transform 0.15s; text-decoration: none; display: inline-block;
+    &:hover { background: #2563a8; transform: translateY(-1px); color: #fff; }
+  }
+
+  &__user { position: relative; display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 10px; border-radius: 8px; transition: background 0.18s;
+    &:hover { background: #f3f4f6; }
+  }
+
+  &__avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #1a3a5c, #2563a8); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; }
+
+  &__username { font-size: 0.9rem; font-weight: 500; color: #1a1a2e; }
+  &__chevron  { font-size: 0.75rem; color: #9ca3af; }
+
+  &__dropdown { position: absolute; top: calc(100% + 8px); right: 0; min-width: 220px; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); overflow: hidden; z-index: 200;
+    &-header { padding: 14px 16px; background: #f8f7f4; border-bottom: 1px solid #e5e7eb; display: flex; flex-direction: column; gap: 2px;
+      strong { font-size: 0.9rem; color: #1a1a2e; }
+      span { font-size: 0.78rem; color: #9ca3af; }
+    }
+    a, button { display: block; width: 100%; padding: 10px 16px; text-align: left; font-size: 0.88rem; color: #374151; text-decoration: none; border: none; background: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s;
+      &:hover { background: #f3f4f6; color: #1a3a5c; }
+    }
+    button { color: #dc2626; &:hover { background: #fee2e2; } }
+  }
+}

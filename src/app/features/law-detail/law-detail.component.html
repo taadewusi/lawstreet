@@ -1,0 +1,48 @@
+<div class="detail-page">
+  <div class="detail-page__inner">
+    <button class="back-btn" (click)="goBack()">← Back to results</button>
+
+    <div class="loading-spinner" *ngIf="loading">
+      <div class="spinner"></div>
+    </div>
+    <div class="alert alert--error" *ngIf="error">{{ error }}</div>
+
+    <div *ngIf="law && !loading">
+      <div class="detail-header">
+        <div class="detail-header__top">
+          <!-- <span class="detail-category">{{ law.category }}</span>
+          <span class="badge badge--{{ law.status }}">{{ law.status }}</span> -->
+        </div>
+        <h1 class="detail-title">{{ law.title }}</h1>
+        <div class="detail-meta">
+          <div class="detail-meta-item"><span class="detail-meta-label">Jurisdiction</span><span>{{ law.jurisdiction
+              }}</span></div>
+          <div class="detail-meta-item"><span class="detail-meta-label">ACT</span><span>{{ law.act }}</span></div> 
+          <!-- <div class="detail-meta-item" *ngIf="law.lastAmended"><span class="detail-meta-label">Last Amended</span><span>{{ law.lastAmended | date:'longDate' }}</span></div>
+          <div class="detail-meta-item" *ngIf="law.chapter"><span class="detail-meta-label">Chapter</span><span>{{ law.chapter }}</span></div> -->
+        </div> 
+        </div>
+
+        <div class="detail-body card">
+          <h2>Section</h2>
+          <p class="detail-summary">{{ law.section }}</p>
+          <div *ngIf="law.simpleExplanation" class="detail-full-text">
+            <h2>legal text</h2>
+            <div class="detail-text-content">{{ law.legalText }}</div>
+          </div>
+
+          <div *ngIf="law.simpleExplanation" class="detail-full-text">
+            <h2>Simplified explanation</h2>
+            <div class="detail-text-content">{{ law.simpleExplanation }}</div>
+          </div>
+
+          <div *ngIf="law.tags?.length" class="detail-tags">
+            <h3>Tags</h3>
+            <div class="detail-tags-list">
+              <span class="result-tag" *ngFor="let tag of law.tags">{{ tag }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

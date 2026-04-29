@@ -1,0 +1,4 @@
+.user-cell { display: flex; align-items: center; gap: 10px; }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#1a3a5c,#2563a8); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 700; flex-shrink: 0; }
+.role-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+.perm-badge { padding: 2px 8px; background: #dbeafe; color: #1e40af; border-radius: 99px; font-size: .7rem; font-weight: 600; }

@@ -1,0 +1,63 @@
+<div class="admin-section">
+  <div class="page-header">
+    <div><h1>Laws Management</h1><p>Create, update and manage all laws in the system.</p></div>
+    <button class="btn btn--primary" (click)="openCreate()">+ Add New Law</button>
+  </div>
+  <div class="alert alert--success" *ngIf="success">{{ success }}</div>
+  <div class="alert alert--error"   *ngIf="error">{{ error }}</div>
+
+  <div class="modal-overlay" *ngIf="showForm" (click)="showForm=false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h2>{{ editingLaw ? 'Edit Law' : 'Create New Law' }}</h2>
+        <button class="modal__close" (click)="showForm=false">✕</button>
+      </div>
+      <div class="modal__body">
+        <div class="form-group"><label>Title *</label><input type="text" [(ngModel)]="form.title" placeholder="Full name of the law" /></div>
+        <div class="form-row--2">
+          <div class="form-group"><label>Category *</label><select [(ngModel)]="form.category"><option value="">Select category</option><option *ngFor="let c of categories" [value]="c">{{ c }}</option></select></div>
+          <div class="form-group"><label>Jurisdiction *</label><select [(ngModel)]="form.jurisdiction"><option value="">Select jurisdiction</option><option *ngFor="let j of jurisdictions" [value]="j">{{ j }}</option></select></div>
+        </div>
+        <div class="form-row--3">
+          <!-- <div class="form-group"><label>Enacted Date *</label><input type="date" [(ngModel)]="form.enactedDate" /></div>
+          <div class="form-group"><label>Status *</label><select [(ngModel)]="form.status"><option value="active">Active</option><option value="repealed">Repealed</option><option value="amended">Amended</option></select></div> -->
+          <div class="form-group"><label>Chapter</label><input type="text" [(ngModel)]="form.chapter" placeholder="e.g. C1" /></div>
+        </div>
+        <!-- <div class="form-group"><label>Summary *</label><textarea [(ngModel)]="form.summary" rows="3" placeholder="Brief summary..."></textarea></div>
+        <div class="form-group"><label>Full Text</label><textarea [(ngModel)]="form.fullText" rows="5" placeholder="Full legal text (optional)..."></textarea></div> -->
+        <div class="form-group"><label>Tags (comma separated)</label><input type="text" [ngModel]="tagsStr" (ngModelChange)="tagsStr=$event" placeholder="e.g. criminal, penalty" /></div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" (click)="showForm=false">Cancel</button>
+        <button class="btn btn--primary" (click)="submit()" [disabled]="submitting">{{ submitting ? 'Saving...' : (editingLaw ? 'Update Law' : 'Create Law') }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0; overflow:hidden;">
+    <div class="loading-spinner" *ngIf="loading"><div class="spinner"></div></div>
+    <table class="data-table" *ngIf="!loading">
+      <thead><tr><th>Title</th><th>Category</th><th>Jurisdiction</th><th>Status</th><th>Enacted</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let law of laws">
+          <td><strong>{{ law.title }}</strong></td>
+          <td>{{ law.title }}</td>
+          <td>{{ law.jurisdiction }}</td>
+          <td><span class="badge badge--{{ law.isPublished }}">{{ law.isPublished }}</span></td>
+          <!-- <td>{{ law.enactedDate | date:'mediumDate' }}</td> -->
+          <td class="actions">
+            <button class="btn btn--outline btn--sm" (click)="openEdit(law)">Edit</button>
+            <button class="btn btn--danger btn--sm" (click)="deleteLaw(law.uid)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="laws.length===0"><td colspan="6" style="text-align:center;padding:40px;color:#9ca3af;">No laws found.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="page-btn" [disabled]="page===0" (click)="goToPage(page-1)">‹</button>
+    <button class="page-btn" [class.active]="i===page" *ngFor="let i of pages" (click)="goToPage(i)">{{ i+1 }}</button>
+    <button class="page-btn" [disabled]="page>=totalPages-1" (click)="goToPage(page+1)">›</button>
+  </div>
+</div>

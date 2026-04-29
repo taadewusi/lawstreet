@@ -1,0 +1,30 @@
+<div class="admin-section">
+  <div class="page-header">
+    <div><h1>Users Management</h1><p>View and manage all registered users.</p></div>
+  </div>
+  <div class="alert alert--success" *ngIf="success">{{ success }}</div>
+  <div class="alert alert--error"   *ngIf="error">{{ error }}</div>
+  <div class="loading-spinner" *ngIf="loading"><div class="spinner"></div></div>
+  <div class="card" style="padding:0; overflow:hidden;" *ngIf="!loading">
+    <table class="data-table">
+      <thead><tr><th>User</th><th>Username</th><th>Email</th><th>Roles</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td><div class="user-cell"><div class="user-avatar">{{ user.firstName[0] }}{{ user.lastName[0] }}</div><span>{{ user.firstName }} {{ user.lastName }}</span></div></td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td><div class="role-badges"><span class="perm-badge" *ngFor="let r of user.roles">{{ r }}</span></div></td>
+          <td><span class="badge" [class.badge--active]="user.isActive" [class.badge--repealed]="!user.isActive">{{ user.isActive ? 'Active' : 'Inactive' }}</span></td>
+          <td>{{ user.createdAt | date:'mediumDate' }}</td>
+          <td><button class="btn btn--sm" [class.btn--outline]="user.isActive" [class.btn--primary]="!user.isActive" (click)="toggleActive(user)">{{ user.isActive ? 'Deactivate' : 'Activate' }}</button></td>
+        </tr>
+        <tr *ngIf="users.length===0"><td colspan="7" style="text-align:center;padding:40px;color:#9ca3af;">No users found.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="page-btn" [disabled]="page===0" (click)="goToPage(page-1)">‹</button>
+    <button class="page-btn" [class.active]="i===page" *ngFor="let i of pages" (click)="goToPage(i)">{{ i+1 }}</button>
+    <button class="page-btn" [disabled]="page>=totalPages-1" (click)="goToPage(page+1)">›</button>
+  </div>
+</div>
